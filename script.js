@@ -3,7 +3,7 @@
 // Try on window load
 window.addEventListener("load", function () {
   // Check if user is logged in
-  if (!currentUser) {
+  if(!currentUser) {
     window.location.href = "login.html";
     return;
   }
@@ -19,6 +19,7 @@ let completedCount = 0;
 const totalDays = 50;
 
 const dietPlans = [
+  
   {
     id: 0,
     name: "Muscle Breakfast",
@@ -224,10 +225,12 @@ const dietPlans = [
     macros: ["500 kcal", "46g P"],
     recipe:
       "Grill 200g white fish. Serve in whole wheat tortillas with cabbage slaw and lime.",
-  },
-];
+  }
 
-const exercises = {
+  ];
+
+
+  const exercises = {
   Push: [
     {
       name: "Incline Bench Press",
@@ -261,7 +264,7 @@ const exercises = {
       name: "High Bar Squats",
       sets: "4 Sets",
       reps: "10",
-      img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200",
+      img: "https://images.unsplash.com/photo-1581009146145-b5ef03a74010?w=200",
     },
     {
       name: "Leg Press",
@@ -291,26 +294,25 @@ function initApp() {
     {
       title: "Strength Pull",
       type: "Pull",
-      img: "https://images.unsplash.com/photo-1581009146145-b5ef03a74010?w=500",
+      img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500",
     },
     {
       title: "Leg Annihilation",
       type: "Legs",
-      img: "https://images.unsplash.com/photo-1574673139081-34827038e93a?w=500",
+      img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500",
     },
     {
       title: "Biceps Blast",
       type: "Pull",
-      img: "https://images.unsplash.com/photo-1590487988256-9ed24133863e?w=500",
+      img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500",
     },
-    {
-      title: "Rest Day",
-      type: "Rest",
-      img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=500",
-    },
+    
+    
+    
+  
   ];
 
-  for (let i = 0; i <= 3; i++) {
+  for (let i = 0; i <= 6; i++) {
     const isRest = i % 7 === 0;
     const cat = workoutCats[i];
     workoutPage.innerHTML += `
@@ -366,7 +368,7 @@ function markDone(day) {
   ).length;
   document.getElementById("total-done").innerText = done;
   document.getElementById("perc").innerText =
-    Math.round((done / 50) * 100) + "%";
+    Math.round((done / 4) * 100) + "%";
 }
 
 function showWorkoutDetails(type, day) {
