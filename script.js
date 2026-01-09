@@ -3,7 +3,7 @@
 // Try on window load
 window.addEventListener("load", function () {
   // Check if user is logged in
-  if(!currentUser) {
+  if (!currentUser) {
     window.location.href = "login.html";
     return;
   }
@@ -225,12 +225,10 @@ const dietPlans = [
     macros: ["500 kcal", "46g P"],
     recipe:
       "Grill 200g white fish. Serve in whole wheat tortillas with cabbage slaw and lime.",
-  }
+  },
+];
 
-  ];
-
-
-  const exercises = {
+const exercises = {
   Push: [
     {
       name: "Incline Bench Press",
@@ -250,7 +248,7 @@ const dietPlans = [
       name: "Lat Pulldowns",
       sets: "4 Sets",
       reps: "10",
-      img: "https://images.unsplash.com/photo-1603287611837-f2146f5de4e8?w=200",
+      img: "https://images.unsplash.com/photo-1594737625785-7f6f0b3f3b2b?w=200",
     },
     {
       name: "Barbell Rows",
@@ -264,7 +262,7 @@ const dietPlans = [
       name: "High Bar Squats",
       sets: "4 Sets",
       reps: "10",
-      img: "https://images.unsplash.com/photo-1581009146145-b5ef03a74010?w=200",
+      img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=200",
     },
     {
       name: "Leg Press",
@@ -304,7 +302,7 @@ function initApp() {
     {
       title: "Biceps Blast",
       type: "Pull",
-      img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500",
+      img: "https://images.unsplash.com/photo-1590487988256-9ed24133863e?w=500",
     },
     
     
@@ -312,7 +310,7 @@ function initApp() {
   
   ];
 
-  for (let i = 0; i <= 6; i++) {
+  for (let i = 0; i < workoutCats.length; i++) {
     const isRest = i % 7 === 0;
     const cat = workoutCats[i];
     workoutPage.innerHTML += `
