@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>workout-pro</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">WORKOUT<span>PRO</span></div>
+      <div class="nav-tabs">
+        <button
+          class="tab-btn active"
+          id="tab-workout"
+          onclick="switchPage('workout')"
+        >
+          TRAINING
+        </button>
+        <button class="tab-btn" id="tab-diet" onclick="switchPage('diet')">
+          NUTRITION
+        </button>
+        <button class="tab-btn logout-btn" onclick="handleLogout()">
+          LOGOUT
+        </button>
+      </div>
+      <div class="user-info">
+        <span id="username"></span>
+      </div>
+    </header>
+
+    <div class="stats-banner">
+      <div class="stat-item">
+        <h2 id="total-done">0</h2>
+        <p>Days Hit</p>
+      </div>
+      <div class="stat-item">
+        <h2 id="perc">0%</h2>
+        <p>Intensity</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="workout-page" class="grid"></div>
+      <div id="diet-page" class="grid" style="display: none"></div>
+    </div>
+
+    <div id="appModal" class="modal" onclick="closeOnOutsideClick(event)">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle" style="color: var(--primary-red); margin-top: 0">
+          Details
+        </h2>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

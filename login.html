@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>WorkoutPro - Login</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .login-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 50px;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .login-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .login-logo {
+        font-size: 32px;
+        font-weight: 900;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .login-logo span {
+        color: #ff4757;
+      }
+
+      .login-subtitle {
+        color: #999;
+        font-size: 14px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 14px;
+        font-family: "Inter", sans-serif;
+        transition: border-color 0.3s;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s;
+        margin-top: 10px;
+      }
+
+      .login-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .login-btn:active {
+        transform: translateY(0);
+      }
+
+      .error-message {
+        color: #ff4757;
+        font-size: 14px;
+        margin-top: 10px;
+        text-align: center;
+        display: none;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
+      .demo-info {
+        background: #f0f0f0;
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 30px;
+        font-size: 13px;
+        color: #666;
+      }
+
+      .demo-info strong {
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-header">
+        <div class="login-logo">WORKOUT<span>PRO</span></div>
+        <p class="login-subtitle">Your Personal Fitness Companion</p>
+      </div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="userId">User ID</label>
+          <input
+            type="text"
+            id="userId"
+            placeholder="Enter your user ID"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="login-btn">LOGIN</button>
+
+        <div id="errorMessage" class="error-message"></div>
+      </form>
+
+      <div class="demo-info">
+        <strong>Demo Credentials:</strong><br />
+        User ID: <strong>user123</strong><br />
+        Password: <strong>pass123</strong>
+      </div>
+    </div>
+
+    <script>
+      // Check if user is already logged in
+      window.onload = function () {
+        const user = localStorage.getItem("currentUser");
+        if (user) {
+          window.location.href = "index.html";
+        }
+      };
+
+      function handleLogin(event) {
+        event.preventDefault();
+
+        const userId = document.getElementById("userId").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const errorMessage = document.getElementById("errorMessage");
+
+        // Simple validation (in production, this would be server-side)
+        if (userId === "user123" && password === "pass123") {
+          // Store user session
+          localStorage.setItem("currentUser", userId);
+          localStorage.setItem("loginTime", new Date().toISOString());
+
+          // Redirect to main app
+          window.location.href = "index.html";
+        } else {
+          errorMessage.textContent = "Invalid User ID or Password";
+          errorMessage.classList.add("show");
+
+          // Clear password field
+          document.getElementById("password").value = "";
+        }
+      }
+    </script>
+  </body>
+</html>
