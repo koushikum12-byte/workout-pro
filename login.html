@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>WorkoutPro - Login</title>
+    <title>WorkoutPro - Login & Register</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
       rel="stylesheet"
@@ -25,36 +25,70 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 20px;
       }
 
-      .login-container {
+      .auth-container {
         background: white;
         border-radius: 20px;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         padding: 50px;
         width: 100%;
-        max-width: 400px;
+        max-width: 420px;
       }
 
-      .login-header {
+      .auth-header {
         text-align: center;
         margin-bottom: 40px;
       }
 
-      .login-logo {
+      .auth-logo {
         font-size: 32px;
         font-weight: 900;
         color: #333;
         margin-bottom: 10px;
       }
 
-      .login-logo span {
+      .auth-logo span {
         color: #ff4757;
       }
 
-      .login-subtitle {
+      .auth-subtitle {
         color: #999;
         font-size: 14px;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e0e0e0;
+      }
+
+      .tab-btn {
+        flex: 1;
+        padding: 12px;
+        background: none;
+        border: none;
+        color: #999;
+        font-weight: 700;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+        font-size: 14px;
+      }
+
+      .tab-btn.active {
+        color: #667eea;
+        border-bottom-color: #667eea;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
       }
 
       .form-group {
@@ -84,7 +118,7 @@
         border-color: #667eea;
       }
 
-      .login-btn {
+      .submit-btn {
         width: 100%;
         padding: 12px;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -98,110 +132,252 @@
         margin-top: 10px;
       }
 
-      .login-btn:hover {
+      .submit-btn:hover {
         transform: translateY(-2px);
       }
 
-      .login-btn:active {
-        transform: translateY(0);
+      .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
       }
 
-      .error-message {
-        color: #ff4757;
+      .message {
         font-size: 14px;
         margin-top: 10px;
         text-align: center;
         display: none;
       }
 
-      .error-message.show {
+      .message.error {
+        color: #ff4757;
+      }
+
+      .message.error.show {
         display: block;
       }
 
-      .demo-info {
-        background: #f0f0f0;
-        border-radius: 10px;
-        padding: 15px;
-        margin-top: 30px;
-        font-size: 13px;
-        color: #666;
+      .message.success {
+        color: #2ed573;
       }
 
-      .demo-info strong {
-        color: #333;
+      .message.success.show {
+        display: block;
+      }
+
+      .loading {
+        text-align: center;
+        color: #667eea;
+        font-size: 14px;
+        display: none;
+      }
+
+      .loading.show {
+        display: block;
       }
     </style>
   </head>
   <body>
-    <div class="login-container">
-      <div class="login-header">
-        <div class="login-logo">WORKOUT<span>PRO</span></div>
-        <p class="login-subtitle">Your Personal Fitness Companion</p>
+    <div class="auth-container">
+      <div class="auth-header">
+        <div class="auth-logo">WORKOUT<span>PRO</span></div>
+        <p class="auth-subtitle">Your Personal Fitness Companion</p>
       </div>
 
-      <form id="loginForm" onsubmit="handleLogin(event)">
-        <div class="form-group">
-          <label for="userId">User ID</label>
-          <input
-            type="text"
-            id="userId"
-            placeholder="Enter your user ID"
-            required
-          />
-        </div>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('login')">
+          LOGIN
+        </button>
+        <button class="tab-btn" onclick="switchTab('register')">
+          REGISTER
+        </button>
+      </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            required
-          />
-        </div>
+      <!-- LOGIN TAB -->
+      <div id="login" class="tab-content active">
+        <form id="loginForm" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input
+              type="email"
+              id="loginEmail"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
 
-        <button type="submit" class="login-btn">LOGIN</button>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input
+              type="password"
+              id="loginPassword"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
 
-        <div id="errorMessage" class="error-message"></div>
-      </form>
+          <button type="submit" class="submit-btn" id="loginBtn">LOGIN</button>
+          <div id="loginLoading" class="loading">Logging in...</div>
+          <div id="loginError" class="message error"></div>
+        </form>
+      </div>
 
-      <div class="demo-info">
-        <strong>Demo Credentials:</strong><br />
-        User ID: <strong>user123</strong><br />
-        Password: <strong>pass123</strong>
+      <!-- REGISTER TAB -->
+      <div id="register" class="tab-content">
+        <form id="registerForm" onsubmit="handleRegister(event)">
+          <div class="form-group">
+            <label for="registerEmail">Email</label>
+            <input
+              type="email"
+              id="registerEmail"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="registerPassword">Password</label>
+            <input
+              type="password"
+              id="registerPassword"
+              placeholder="Minimum 6 characters"
+              required
+              minlength="6"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="registerConfirm">Confirm Password</label>
+            <input
+              type="password"
+              id="registerConfirm"
+              placeholder="Confirm password"
+              required
+            />
+          </div>
+
+          <button type="submit" class="submit-btn" id="registerBtn">
+            REGISTER
+          </button>
+          <div id="registerLoading" class="loading">Creating account...</div>
+          <div id="registerError" class="message error"></div>
+          <div id="registerSuccess" class="message success"></div>
+        </form>
       </div>
     </div>
 
+    <!-- Firebase Auth via REST API (no SDK needed) -->
+    <script src="firebase-auth.js"></script>
+    <script src="auth-utils.js"></script>
+
     <script>
       // Check if user is already logged in
-      window.onload = function () {
-        const user = localStorage.getItem("currentUser");
-        if (user) {
+      window.addEventListener("load", function () {
+        if (currentUser) {
           window.location.href = "index.html";
         }
-      };
+      });
 
-      function handleLogin(event) {
+      // Tab switching
+      function switchTab(tab) {
+        // Hide all tabs
+        document.getElementById("login").classList.remove("active");
+        document.getElementById("register").classList.remove("active");
+
+        // Remove active from all buttons
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        // Show selected tab
+        document.getElementById(tab).classList.add("active");
+        event.target.classList.add("active");
+
+        // Clear messages
+        hideMessage("loginError");
+        hideMessage("registerError");
+        hideMessage("registerSuccess");
+      }
+
+      // Login handler
+      async function handleLogin(event) {
         event.preventDefault();
 
-        const userId = document.getElementById("userId").value.trim();
-        const password = document.getElementById("password").value.trim();
-        const errorMessage = document.getElementById("errorMessage");
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
 
-        // Simple validation (in production, this would be server-side)
-        if (userId === "user123" && password === "pass123") {
-          // Store user session
-          localStorage.setItem("currentUser", userId);
-          localStorage.setItem("loginTime", new Date().toISOString());
+        // Clear previous errors
+        hideMessage("loginError");
 
-          // Redirect to main app
+        // Show loading
+        showMessage("loginLoading", "Logging in...", "loading");
+        document.getElementById("loginBtn").disabled = true;
+
+        const result = await firebaseSignIn(email, password);
+
+        if (result.success) {
+          hideMessage("loginLoading");
           window.location.href = "index.html";
         } else {
-          errorMessage.textContent = "Invalid User ID or Password";
-          errorMessage.classList.add("show");
+          hideMessage("loginLoading");
+          document.getElementById("loginBtn").disabled = false;
+          showMessage("loginError", result.error || "Login failed", "error");
+        }
+      }
 
-          // Clear password field
-          document.getElementById("password").value = "";
+      // Register handler
+      async function handleRegister(event) {
+        event.preventDefault();
+
+        const email = document.getElementById("registerEmail").value.trim();
+        const password = document.getElementById("registerPassword").value;
+        const confirmPassword =
+          document.getElementById("registerConfirm").value;
+
+        // Clear previous messages
+        hideMessage("registerError");
+        hideMessage("registerSuccess");
+
+        // Validate passwords match
+        if (password !== confirmPassword) {
+          showMessage("registerError", "Passwords do not match", "error");
+          return;
+        }
+
+        // Show loading
+        showMessage("registerLoading", "Creating account...", "loading");
+        document.getElementById("registerBtn").disabled = true;
+
+        const result = await firebaseSignUp(email, password);
+
+        if (result.success) {
+          hideMessage("registerLoading");
+          document.getElementById("registerBtn").disabled = false;
+
+          showMessage(
+            "registerSuccess",
+            "Account created successfully! You can now login.",
+            "success"
+          );
+
+          // Clear form
+          document.getElementById("registerForm").reset();
+
+          // Switch to login tab after 2 seconds
+          setTimeout(() => {
+            document.getElementById("login").classList.add("active");
+            document.getElementById("register").classList.remove("active");
+            document.querySelectorAll(".tab-btn")[0].classList.add("active");
+            document.querySelectorAll(".tab-btn")[1].classList.remove("active");
+          }, 2000);
+        } else {
+          hideMessage("registerLoading");
+          document.getElementById("registerBtn").disabled = false;
+
+          showMessage(
+            "registerError",
+            result.error || "Registration failed",
+            "error"
+          );
         }
       }
     </script>

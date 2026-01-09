@@ -1,15 +1,22 @@
-// Authentication check
-window.addEventListener("DOMContentLoaded", function () {
-  const currentUser = localStorage.getItem("currentUser");
+// Diet plans data
+
+// Try on window load
+window.addEventListener("load", function () {
+  // Check if user is logged in
   if (!currentUser) {
     window.location.href = "login.html";
     return;
   }
-  // Display username
-  document.getElementById("username").textContent = "User: " + currentUser;
+
+  // Display user email
+  const usernameEl = document.getElementById("username");
+  if (usernameEl) {
+    usernameEl.textContent = "User: " + currentUser.email;
+  }
 });
 
 let completedCount = 0;
+const totalDays = 50;
 
 const dietPlans = [
   {
@@ -303,7 +310,8 @@ function initApp() {
     },
   ];
 
-  for (let i = 0; i <= 5; i++) {
+  for (let i = 0; i <= 3; i++) {
+    const isRest = i % 7 === 0;
     const cat = workoutCats[i];
     workoutPage.innerHTML += `
                     <div class="card" id="card-${i}">
@@ -420,7 +428,9 @@ function closeOnOutsideClick(e) {
 }
 
 function handleLogout() {
-  // Clear user session
+  // Sign out and clear auth
+  firebaseSignOut();
+  // Clear any local storage
   localStorage.removeItem("currentUser");
   localStorage.removeItem("loginTime");
   // Redirect to login page
